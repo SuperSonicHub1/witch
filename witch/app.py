@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, make_response, request, abort
 from youtube_dl import YoutubeDL
+from youtube_dl.utils import DownloadError
 import requests
 from mimetypes import guess_type
 from . import default_settings
@@ -42,5 +43,14 @@ def proxy(url: str):
 
 @app.route("/<streamer>/")
 def streamer(streamer: str):
-    info = ytdl.extract_info(f"https://twitch.tv/{streamer}/", download=False)
-    return render_template("streamer.html.jinja2", streamer=streamer, info=info)
+    try:
+        info = ytdl.extract_info(f"https://twitch.tv/{streamer}/", download=False)
+        return render_template("streamer.html.jinja2", streamer=streamer, info=info)
+    except DownloadError as e:
+        msg = str(e)
+        if "does not exist" in msg:
+            abort(404, f"{streamer} does not exist.")
+        elif "is offline" in msg:
+            abort(410, f"{streamer} is offline.")
+        else:
+            abort(500)
