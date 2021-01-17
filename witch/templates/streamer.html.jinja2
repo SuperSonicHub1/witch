@@ -14,13 +14,20 @@
 <body>
     <main class="container">
         <section id="video-player">
-            <video id="video" width="100%" height="auto" playsinline controls></video>
+            <video 
+                id="video"
+                width="100%"
+                height="auto"
+                poster="{{info.thumbnail}}"
+                playsinline
+                controls>
+            </video>
             <h1>{{info.description}}</h1>
             <h2>@{{info.uploader}}</h2>
             <a href="https://twitch.tv/{{streamer}}">Watch on Twitch</a>
         </section>
         <section id="chat">
-            <iframe src="https://www.twitch.tv/embed/{{streamer}}/chat?parent={{config['WEBSITE_ORIGIN']}}"
+            <iframe src="https://www.twitch.tv/embed/{{streamer}}/chat?parent={{config.WEBSITE_ORIGIN}}"
                     height="100%"
                     width="auto">
             </iframe>
