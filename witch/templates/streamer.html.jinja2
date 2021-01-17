@@ -29,8 +29,8 @@
     
 
     <script>
-        let video = document.getElementById('video')
-        let videoSrc = "/api/proxy/{{info.manifest_url | urlencode}}"
+        const video = document.getElementById('video')
+        const videoSrc = "/api/proxy/{{info.manifest_url | urlencode}}"
         //
         // First check for native browser HLS support
         //
