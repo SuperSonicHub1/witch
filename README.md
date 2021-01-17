@@ -20,8 +20,9 @@ __Default__: `"localhost"`
 This is the full domain of the website you're hosting Witch on, for example: example.com. This is mostly used to make Twitch chat shut up.
 
 ## Roadmap
-* [Error handling]https://flask.palletsprojects.com/en/1.1.x/patterns/errorpages/)
+* ~~[Error handling](https://flask.palletsprojects.com/en/1.1.x/patterns/errorpages/)~~
 * VODs
+* Clips
 * Nice index
 * Search
 * Test suite
