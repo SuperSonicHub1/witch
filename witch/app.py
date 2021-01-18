@@ -31,7 +31,6 @@ def index():
 @app.route("/api/proxy/<path:url>")
 def proxy(url: str):
     res = session.get(url)
-    print(url, "\n", res.url)
     if ".m3u8" in url:
         content = res.text.replace("https://", "/api/proxy/https://")
         response = make_response(content)
@@ -47,3 +46,15 @@ def proxy(url: str):
 def streamer(streamer: str):
     info = attempt_extract(f"https://twitch.tv/{streamer}/", streamer=streamer)
     return render_template("streamer.html.jinja2", streamer=streamer, info=info)
+
+
+@app.route("/<streamer>/videos/")
+def videos(streamer: str):
+    info = attempt_extract(f"https://twitch.tv/{streamer}/videos/", streamer=streamer)
+    return render_template("videos.html.jinja2", streamer=streamer, info=info)
+
+
+@app.route("/videos/<int:id_>/")
+def vod(id_: int):
+    info = attempt_extract(f"https://twitch.tv/videos/{id_}/")
+    return render_template("vod.html.jinja2", info=info)
