@@ -21,7 +21,7 @@ This is the full domain of the website you're hosting Witch on, for example: exa
 
 ## Roadmap
 * ~~[Error handling](https://flask.palletsprojects.com/en/1.1.x/patterns/errorpages/)~~
-* VODs
+* ~~VODs~~
 * Clips
 * Nice index
 * Search
