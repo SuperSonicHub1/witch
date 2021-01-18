@@ -1,0 +1,20 @@
+{% extends "layout.html.jinja2" %}
+{% import 'macros.html.jinja2' as macros %}
+{% block title %}{{ info.title }}{% endblock title %}
+
+{% block body %}
+<main>
+    <video 
+            id="video"
+            width="100%"
+            height="auto"
+            poster="{{info.thumbnail}}"
+            playsinline
+            controls>
+        <source src="/api/proxy/{{info.url}}" type="video/mp4">
+    </video>
+    <h1>{{info.title}}</h1>
+    <h2>@{{info.creator}} (Clipped by @{{info.uploader}})</h2>
+    {{ macros.mirror(info.webpage_url) }}
+</main>
+{% endblock body %}

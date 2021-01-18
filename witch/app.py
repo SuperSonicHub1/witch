@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, make_response, request
+from flask import Flask, render_template, redirect, make_response, request, url_for
 from .ytdl import ytdl, attempt_extract
 import requests
 from mimetypes import guess_type
@@ -51,11 +51,29 @@ def streamer(streamer: str):
 @app.route("/<streamer>/videos/")
 def videos(streamer: str):
     qs: bytes = request.query_string
+    # Add forms
     info = attempt_extract(f"https://twitch.tv/{streamer}/videos/?{qs.decode('ascii')}", streamer=streamer)
     return render_template("videos.html.jinja2", streamer=streamer, info=info)
 
 
-@app.route("/videos/<id_>/")
-def vod(id_: str):
+@app.route("/<streamer>/clips/")
+def clips(streamer: str):
+    qs: bytes = request.query_string
+    # Add forms
+    info = attempt_extract(f"https://twitch.tv/{streamer}/clips?{qs.decode('ascii')}", streamer=streamer)
+    return render_template("clips.html.jinja2", streamer=streamer, info=info)
+
+
+@app.route("/<streamer>/clip/<id_>")
+def streamer_clip(streamer: str, id_: str):
+    return redirect(url_for("clip", id_=id_))
+
+@app.route('/clips/<id_>')
+def clip(id_: str):
+    info = attempt_extract(f"https://clips.twitch.tv/{id_}")
+    return render_template("clip.html.jinja2", streamer=streamer, info=info)
+
+@app.route("/videos/<int:id_>/")
+def vod(id_: int):
     info = attempt_extract(f"https://twitch.tv/videos/{id_}/")
     return render_template("vod.html.jinja2", info=info)

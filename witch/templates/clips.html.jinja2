@@ -1,14 +1,14 @@
 {% extends "layout.html.jinja2" %}
 {% import 'macros.html.jinja2' as macros %}
-{% block title %}{{streamer}}'s Videos{% endblock title %}
+{% block title %}{{streamer}}'s Clips{% endblock title %}
 {% block body %}
 <main>
     <h1>{{ info.title }}</h1>
     {{ macros.mirror(info.webpage_url) }}
     <a href="{{ url_for('streamer', streamer=streamer) }}">Back to streamer</a>
-    <section id="videos">
-    {% for video in info.entries %}
-        {{ macros.card(video.thumbnail, video.title, url_for("vod", id_=video.webpage_url_basename)) }}
+    <section id="clips">
+    {% for clip in info.entries %}
+        {{ macros.card(clip.thumbnail, clip.title, url_for('clip', id_=clip.webpage_url_basename)) }}
     {% endfor %}
     </section>
 </main>

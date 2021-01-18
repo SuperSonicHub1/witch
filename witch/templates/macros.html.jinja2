@@ -1,3 +1,11 @@
 {% macro mirror(url) %}
     <a href="{{url}}">View on Twitch</a>
 {% endmacro %}
+
+{% macro card(thumbnail, title, url) %}
+    <article class="card">
+        <img src="{{ thumbnail }}" alt="">
+        <h2>{{ title }}</h2>
+        <a href="{{ url }}">View video</a>
+    </article>
+{% endmacro %}
