@@ -50,11 +50,12 @@ def streamer(streamer: str):
 
 @app.route("/<streamer>/videos/")
 def videos(streamer: str):
-    info = attempt_extract(f"https://twitch.tv/{streamer}/videos/", streamer=streamer)
+    qs: bytes = request.query_string
+    info = attempt_extract(f"https://twitch.tv/{streamer}/videos/?{qs.decode('ascii')}", streamer=streamer)
     return render_template("videos.html.jinja2", streamer=streamer, info=info)
 
 
-@app.route("/videos/<int:id_>/")
-def vod(id_: int):
+@app.route("/videos/<id_>/")
+def vod(id_: str):
     info = attempt_extract(f"https://twitch.tv/videos/{id_}/")
     return render_template("vod.html.jinja2", info=info)
