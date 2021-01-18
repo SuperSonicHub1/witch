@@ -27,5 +27,6 @@ This is the full domain of the website you're hosting Witch on, for example: exa
 * Embeds
 * Search
 * Make pages more metadata rich
+* Add forms to `clips` and `videos` in order to allow users to filter results.
 * Test suite
 * CSS
