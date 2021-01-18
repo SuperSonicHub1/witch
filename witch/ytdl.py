@@ -2,14 +2,17 @@ from youtube_dl import YoutubeDL
 from youtube_dl.utils import DownloadError
 from flask import abort
 
-ytdl = YoutubeDL({
-    "quiet": True,
-    # Activate quiet mode
-    "source_address": "0.0.0.0",
-    # Client-side IP address to bind to
-    "dump_single_json": True,
-    # Simulate, quiet but print JSON information for each command-line argument. If the URL refers to a playlist, dump the whole playlist information in a single line.
-})
+ytdl = YoutubeDL(
+    {
+        "quiet": True,
+        # Activate quiet mode
+        "source_address": "0.0.0.0",
+        # Client-side IP address to bind to
+        "dump_single_json": True,
+        # Simulate, quiet but print JSON information for each command-line argument. If the URL refers to a playlist, dump the whole playlist information in a single line.
+    }
+)
+
 
 def attempt_extract(url: str, streamer: str = "") -> dict:
     """
