@@ -24,6 +24,7 @@ base_steam_query = {
 def get_live_streamer(login: str):
     op = Operations.query.get_live_user
     data = endpoint(op, dict(login=login))
+    # Figure out why the operation syntax isn't working.
     info = data["data"]
     access_token = info["user"]["stream"]["playbackAccessToken"]
 
