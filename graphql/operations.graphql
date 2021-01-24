@@ -1,0 +1,32 @@
+query GetLiveUser($login: String!){
+  user(login: $login) {
+    login
+    displayName
+    description
+    roles {
+      isPartner
+    }
+    broadcastSettings {
+      title
+      game {
+        boxArtURL
+        name
+      }
+      isMature
+    }
+    stream {
+      tags {
+        localizedName
+        localizedDescription
+        id
+      }
+      createdAt
+      previewImageURL(width: 1920, height: 1080)
+      playbackAccessToken(params: {platform: "web", playerBackend: "mediaplayer", playerType: "site"}) {
+        signature
+        value
+      }
+      viewersCount
+    }
+  }
+}

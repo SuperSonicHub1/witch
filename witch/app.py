@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, make_response, request, url_
 from .ytdl import ytdl, attempt_extract
 from mimetypes import guess_type
 from .session import session
-from . import default_settings
+from . import default_settings, graphql
 
 app = Flask(__name__)
 app.config.from_object(default_settings)
@@ -27,18 +27,18 @@ def proxy(url: str):
         content = res.text.replace("https://", "/api/proxy/https://")
         response = make_response(content)
         response.headers["content-type"] = "application/vnd.apple.mpegurl"
+        response.headers["x-url"] = url
         return response
     else:
         response = make_response(res.content)
         response.headers["content-type"] = guess_type(url)[0]
+        response.headers["x-url"] = url
         return response
-
 
 @app.route("/<streamer>/")
 def streamer(streamer: str):
-    info = attempt_extract(f"https://twitch.tv/{streamer}/", streamer=streamer)
-    return render_template("streamer.html.jinja2", streamer=streamer, info=info)
-
+    info, stream_url = graphql.get_live_streamer(streamer.lower())
+    return render_template("streamer.html.jinja2", streamer=streamer, info=info, stream_url=stream_url)
 
 @app.route("/<streamer>/videos/")
 def videos(streamer: str):

@@ -1,6 +1,6 @@
 {% extends "layout.html.jinja2" %}
 {% import 'macros.html.jinja2' as macros %}
-{% block title %}{{info.uploader}}{% endblock title %}
+{% block title %}{{info.user.displayName}}{% endblock title %}
 {% block head %}
 <style>
     .container {
@@ -17,13 +17,13 @@
             id="video"
             width="100%"
             height="auto"
-            poster="{{info.thumbnail}}"
+            poster="{{info.user.stream.previewImageURL}}"
             playsinline
             controls>
         </video>
-        <h1>{{info.description}}</h1>
-        <h2>@{{info.uploader}}</h2>
-        {{ macros.mirror(info.webpage_url) }}
+        <h1>{{info.user.broadcastSettings.title}}</h1>
+        <h2>@{{info.user.displayName}}</h2>
+        {{ macros.mirror("https://twitch.tv/" + streamer) }}
     </section>
     <section id="chat">
         <iframe src="https://www.twitch.tv/embed/{{streamer}}/chat?parent={{config.WEBSITE_ORIGIN}}"
@@ -36,7 +36,7 @@
 
 <script>
     const video = document.getElementById('video')
-    const videoSrc = "/api/proxy/{{info.manifest_url | urlencode}}"
+    const videoSrc = "/api/proxy/{{stream_url | urlencode}}"
     //
     // First check for native browser HLS support
     //
