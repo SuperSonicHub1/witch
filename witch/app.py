@@ -1,20 +1,12 @@
 from flask import Flask, render_template, redirect, make_response, request, url_for
 from .ytdl import ytdl, attempt_extract
-import requests
 from mimetypes import guess_type
+from .session import session
 from . import default_settings
 
 app = Flask(__name__)
 app.config.from_object(default_settings)
 app.config.from_envvar("WITCH_SETTINGS", silent=True)
-
-session = requests.Session()
-session.headers.update(
-    {
-        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3535.2 Safari/537.36"
-    }
-)
-
 
 @app.route("/favicon.ico")
 def favicon():
