@@ -11,25 +11,29 @@
 {% endblock head %}
 
 {% block body %}
-<main class="container">
-    <section id="video-player">
-        <video 
-            id="video"
-            width="100%"
-            height="auto"
-            poster="{{info.user.stream.previewImageURL}}"
-            playsinline
-            controls>
-        </video>
+<main>
+    <div id="stream" class="container">
+        <section id="video-player">
+            <video 
+                id="video"
+                width="100%"
+                height="auto"
+                poster="{{info.user.stream.previewImageURL}}"
+                playsinline
+                controls>
+            </video>
+        </section>
+        <section id="chat">
+            <iframe src="https://www.twitch.tv/embed/{{streamer}}/chat?parent={{config.WEBSITE_ORIGIN}}"
+                    height="100%"
+                    width="auto">
+            </iframe>
+        </section>
+    </div>
+    <section id="info">
         <h1>{{info.user.broadcastSettings.title}}</h1>
         <h2>@{{info.user.displayName}}</h2>
         {{ macros.mirror("https://twitch.tv/" + streamer) }}
-    </section>
-    <section id="chat">
-        <iframe src="https://www.twitch.tv/embed/{{streamer}}/chat?parent={{config.WEBSITE_ORIGIN}}"
-                height="100%"
-                width="auto">
-        </iframe>
     </section>
 </main>
 
