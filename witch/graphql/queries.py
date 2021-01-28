@@ -1,4 +1,5 @@
 import random
+from typing import Dict, Union
 from urllib.parse import urlencode
 from sgqlc.endpoint.requests import RequestsEndpoint
 from twitch_sgqlc import schema
@@ -11,7 +12,7 @@ endpoint = RequestsEndpoint(
     session=session,
 )
 
-base_steam_query = {
+base_steam_query: Dict[str, Union[str, int]]  = {
     "allow_source": "true",
     "allow_audio_only": "true",
     "allow_spectre": "true",
