@@ -25,6 +25,10 @@ def get_live_streamer(login: str):
     op = Operations.query.get_live_user
     data = endpoint(op, dict(login=login))
     # Figure out why the operation syntax isn't working.
+    # Figured it out: Twitch expects a RFC3339 timestamp. For example "2015-07-22T21:41:14Z".
+    # while SGQLC assumes use of ISO 8601.
+    # Only way I could fix this is by creating my own class. Hoo boy.
+    # print(op + data)
     info = data["data"]
     access_token = info["user"]["stream"]["playbackAccessToken"]
 
