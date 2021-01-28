@@ -18,7 +18,7 @@ base_steam_query: Dict[str, Union[str, int]]  = {
     "allow_spectre": "true",
     "player": "twitchweb",
     "playlist_include_framerate": "true",
-    "segment_preference": "4",
+    "segment_preference": 4,
 }
 
 
