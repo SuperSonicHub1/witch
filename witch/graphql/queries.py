@@ -1,5 +1,5 @@
 import random
-from typing import Dict, Union
+from typing import Dict, Union, Tuple
 from urllib.parse import urlencode
 from sgqlc.endpoint.requests import RequestsEndpoint
 from twitch_sgqlc import schema
@@ -22,23 +22,18 @@ base_steam_query: Dict[str, Union[str, int]]  = {
 }
 
 
-def get_live_streamer(login: str):
+def get_live_streamer(login: str) -> Tuple[schema.Query, str]:
     op = Operations.query.get_live_user
     data = endpoint(op, dict(login=login))
-    # Figure out why the operation syntax isn't working.
-    # Figured it out: Twitch expects a RFC3339 timestamp. For example "2015-07-22T21:41:14Z".
-    # while SGQLC assumes use of ISO 8601.
-    # Only way I could fix this is by creating my own class. Hoo boy.
-    # print(op + data)
-    info = data["data"]
-    access_token = info["user"]["stream"]["playbackAccessToken"]
+    info: schema.Query = (op + data)
+    access_token = info.user.stream.playback_access_token
 
     query = dict(**base_steam_query)
     query.update(
         {
             "p": random.randint(1000000, 10000000),
-            "sig": access_token["signature"],
-            "token": access_token["value"],
+            "sig": access_token.signature,
+            "token": access_token.value,
         }
     )
     return (

@@ -1,6 +1,6 @@
 {% extends "layout.html.jinja2" %}
 {% import 'macros.html.jinja2' as macros %}
-{% block title %}{{info.user.displayName}}{% endblock title %}
+{% block title %}{{info.user.display_name}}{% endblock title %}
 {% block head %}
 <style>
     .container {
@@ -18,7 +18,7 @@
                 id="video"
                 width="100%"
                 height="auto"
-                poster="{{info.user.stream.previewImageURL}}"
+                poster="{{info.user.stream.preview_image_url}}"
                 playsinline
                 controls>
             </video>
@@ -31,8 +31,8 @@
         </section>
     </div>
     <section id="info">
-        <h1>{{info.user.broadcastSettings.title}}</h1>
-        <h2>@{{info.user.displayName}}</h2>
+        <h1>{{info.user.broadcast_settings.title}}</h1>
+        <h2>@{{info.user.display_name}}</h2>
         {{ macros.mirror("https://twitch.tv/" + streamer) }}
     </section>
 </main>
