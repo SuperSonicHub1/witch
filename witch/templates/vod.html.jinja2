@@ -1,6 +1,6 @@
 {% extends "layout.html.jinja2" %}
 {% import 'macros.html.jinja2' as macros %}
-{% block title %}{{ info.title }}{% endblock title %}
+{% block title %}{{ title }}{% endblock title %}
 {% block head %}
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 {% endblock head %}
@@ -11,20 +11,20 @@
             id="video"
             width="100%"
             height="auto"
-            poster="{{info.thumbnail}}"
+            poster="{{poster}}"
             playsinline
             controls>
     </video>
-    <h1>{{info.title}}</h1>
-    <h2>@{{info.uploader}}</h2>
-    {{ macros.mirror(info.webpage_url) }}
+    <h1>{{broadcast_title}}</h1>
+    <h2>@{{streamer}}</h2>
+    {{ macros.mirror(mirror) }}
     {# Find a way to add chat. #}
 </main>
 
 
 <script>
     const video = document.getElementById('video')
-    const videoSrc = "/api/proxy/{{info.manifest_url | urlencode}}"
+    const videoSrc = "/api/proxy/{{stream_url | urlencode}}"
     //
     // First check for native browser HLS support
     //
