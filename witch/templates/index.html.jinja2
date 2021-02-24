@@ -1,0 +1,10 @@
+{% extends "layout.html.jinja2" %}
+{% block title %}Home{% endblock title %}
+{% block body %}
+<h1>Witch</h1>
+<p>a frontend alternative to Twitch by Kyle Anthony Williams</p>
+<form action="/api/goto" method="get">
+    <label>Find streamer: <input type="text" name="streamer" id="streamer"></label>
+    <button type="submit">Go!</button>
+</form>
+{% endblock body %}

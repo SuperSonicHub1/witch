@@ -19,8 +19,11 @@ def favicon():
 
 @app.route("/")
 def index():
-    return "Go to /{streamer}/ to find the person you want to watch."
+    return render_template("index.html.jinja2")
 
+@app.route("/api/goto")
+def goto():
+    return redirect(url_for("streamer", streamer=request.args.get("streamer", ""))) 
 
 @app.route("/api/proxy/<path:url>")
 def proxy(url: str):
