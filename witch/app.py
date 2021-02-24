@@ -1,10 +1,12 @@
 from flask import Flask, render_template, redirect, make_response, request, url_for
+from turbo_flask import Turbo
 from .ytdl import ytdl, attempt_extract
 from mimetypes import guess_type
 from .session import session
 from . import default_settings, graphql
 
 app = Flask(__name__)
+turbo = Turbo(app)
 app.config.from_object(default_settings)
 app.config.from_envvar("WITCH_SETTINGS", silent=True)
 
@@ -34,6 +36,10 @@ def proxy(url: str):
         response.headers["content-type"] = guess_type(url)[0]
         response.headers["x-url"] = url
         return response
+
+@app.route("/m/")
+def multi():
+    pass
 
 @app.route("/<streamer>/")
 def streamer(streamer: str):
