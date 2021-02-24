@@ -23,6 +23,14 @@ def index():
     return render_template("index.html.jinja2")
 
 
+@app.route("/m/")
+def multi():
+    return render_template(
+        "multi.html.jinja2",
+        streamers=request.args.getlist("streamer") + request.args.getlist("s"),
+    )
+
+
 @app.route("/api/goto")
 def goto():
     return redirect(url_for("streamer", streamer=request.args.get("streamer", "")))
@@ -44,11 +52,6 @@ def proxy(url: str):
         return response
 
 
-@app.route("/m/")
-def multi():
-    pass
-
-
 @app.route("/<streamer>/")
 def streamer(streamer: str):
     info, stream_url = graphql.get_live_streamer(streamer.lower())
@@ -62,7 +65,7 @@ def streamer(streamer: str):
         broadcast_title=info.user.broadcast_settings.title,
         info=info,
         stream_url=stream_url,
-        mirror="https://twitch.tv/" + streamer
+        mirror="https://twitch.tv/" + streamer,
     )
 
 
@@ -75,18 +78,21 @@ def videos(streamer: str):
     )
     return render_template("videos.html.jinja2", streamer=streamer, info=info)
 
+
 @app.route("/videos/<int:id_>/")
 def vod(id_: int):
     info = attempt_extract(f"https://twitch.tv/videos/{id_}/")
-    return render_template("vod.html.jinja2",
+    return render_template(
+        "vod.html.jinja2",
         info=info,
         poster=info.get("thumbnail"),
         title=info.get("title"),
         broadcast_title=info.get("title"),
         streamer=info.get("uploader"),
         stream_url=info.get("manifest_url"),
-        mirror=info.get("webpage_url")
+        mirror=info.get("webpage_url"),
     )
+
 
 @app.route("/<streamer>/clips/")
 def clips(streamer: str):
