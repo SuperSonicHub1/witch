@@ -14,14 +14,15 @@
 <main>
     <div id="stream" class="container">
         <section id="video-player">
-            <video 
+            {% include "partials/stream.html.jinja2" %}
+            {# <video 
                 id="video"
                 width="100%"
                 height="auto"
                 poster="{{poster}}"
                 playsinline
                 controls>
-            </video>
+            </video> #}
         </section>
         <section id="chat">
             <iframe src="https://www.twitch.tv/embed/{{streamer}}/chat?parent={{config.WEBSITE_ORIGIN}}"
@@ -38,7 +39,7 @@
 </main>
 
 
-<script>
+{# <script>
     const video = document.getElementById('video')
     const videoSrc = "/api/proxy/{{stream_url | urlencode}}"
     //
@@ -56,5 +57,5 @@
         hls.attachMedia(video)
         hls.on(Hls.Events.MANIFEST_PARSED, () => video.play())
     }
-</script>
+</script> #}
 {% endblock body %}

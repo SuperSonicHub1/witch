@@ -1,0 +1,29 @@
+{% set id_ = "video-" + streamer.lower() %}
+<video 
+    id="{{id_}}"
+    width="100%"
+    height="auto"
+    poster="{{poster}}"
+    playsinline
+    controls>
+</video>
+
+<script>
+    let video = document.getElementById('{{id_}}')
+    let videoSrc = "/api/proxy/{{stream_url | urlencode}}"
+    //
+    // First check for native browser HLS support
+    //
+    if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = videoSrc
+        video.addEventListener('canplay', () => video.play())
+        //
+        // If no native HLS support, check if hls.js is supported
+        //
+    } else if (Hls.isSupported()) {
+        let hls = new Hls()
+        hls.loadSource(videoSrc)
+        hls.attachMedia(video)
+        hls.on(Hls.Events.MANIFEST_PARSED, () => video.play())
+    }
+</script>

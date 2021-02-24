@@ -52,6 +52,7 @@ def multi():
 @app.route("/<streamer>/")
 def streamer(streamer: str):
     info, stream_url = graphql.get_live_streamer(streamer.lower())
+
     streamer = info.user.display_name
     return render_template(
         "streamer.html.jinja2",
