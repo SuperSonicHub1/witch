@@ -11,6 +11,7 @@ Flask = "^1.1.2"
 requests = "^2.25.1"
 sgqlc = {version = "^12.1", extras = ["requests"]}
 twitch-sgqlc = {git = "https://github.com/SuperSonicHub1/twitch_sgqlc.git"}
+Turbo-Flask = "^0.0.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
