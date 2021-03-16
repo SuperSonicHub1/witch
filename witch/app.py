@@ -23,6 +23,22 @@ def index():
     return render_template("index.html.jinja2")
 
 
+@app.route("/api/embed/<streamer>")
+def embed_streamer(streamer: str):
+    info, stream_url = graphql.get_live_streamer(streamer.lower())
+
+    streamer = info.user.display_name
+    return render_template(
+        "embed.html.jinja2",
+        streamer=streamer,
+        title=streamer,
+        poster=info.user.stream.preview_image_url,
+        broadcast_title=info.user.broadcast_settings.title,
+        info=info,
+        stream_url=stream_url,
+        mirror="https://twitch.tv/" + streamer,
+    )
+
 @app.route("/m/")
 def multi():
     return render_template(

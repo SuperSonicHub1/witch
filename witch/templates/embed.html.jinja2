@@ -1,0 +1,22 @@
+{% extends "layout.html.jinja2" %}
+{% block title %}{{title}}{% endblock title %}
+{% block head %}
+<style>
+    .container {
+        display: flex;
+    }
+    html, body {
+         /* height: 100%;
+        width: 100%; */
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+{% endblock head %}
+
+{% block body %}
+<main class="container">
+    {% include "partials/stream.html.jinja2" %}
+</main>
+{% endblock body %}
