@@ -1,12 +1,17 @@
-from flask import Flask, render_template, redirect, make_response, request, url_for
-from turbo_flask import Turbo
-from .ytdl import ytdl, attempt_extract
 from mimetypes import guess_type
-from .session import session
+
+from flask import Flask, redirect, make_response, request, url_for
+from turbo_flask import Turbo
+
 from . import default_settings, graphql
+from .decorators import templated
+from .session import session
+from .ytdl import ytdl, attempt_extract
 
 app = Flask(__name__)
 turbo = Turbo(app)
+
+# Load settings
 app.config.from_object(default_settings)
 app.config.from_envvar("WITCH_SETTINGS", silent=True)
 
@@ -19,17 +24,19 @@ def favicon():
 
 
 @app.route("/")
+@templated()
 def index():
-    return render_template("index.html.jinja2")
+    return None
 
 
 @app.route("/api/embed/<streamer>")
+@templated("embed.html.jinja2")
 def embed_streamer(streamer: str):
     info, stream_url = graphql.get_live_streamer(streamer.lower())
 
     streamer = info.user.display_name
-    return render_template(
-        "embed.html.jinja2",
+
+    return dict(
         streamer=streamer,
         title=streamer,
         poster=info.user.stream.preview_image_url,
@@ -39,10 +46,11 @@ def embed_streamer(streamer: str):
         mirror="https://twitch.tv/" + streamer,
     )
 
+
 @app.route("/m/")
+@templated()
 def multi():
-    return render_template(
-        "multi.html.jinja2",
+    return dict(
         streamers=request.args.getlist("streamer") + request.args.getlist("s"),
     )
 
@@ -69,12 +77,13 @@ def proxy(url: str):
 
 
 @app.route("/<streamer>/")
+@templated()
 def streamer(streamer: str):
     info, stream_url = graphql.get_live_streamer(streamer.lower())
 
     streamer = info.user.display_name
-    return render_template(
-        "streamer.html.jinja2",
+
+    return dict(
         streamer=streamer,
         title=streamer,
         poster=info.user.stream.preview_image_url,
@@ -86,20 +95,21 @@ def streamer(streamer: str):
 
 
 @app.route("/<streamer>/videos/")
+@templated()
 def videos(streamer: str):
     qs: bytes = request.query_string
     # Add forms
     info = attempt_extract(
         f"https://twitch.tv/{streamer}/videos/?{qs.decode('ascii')}", streamer=streamer
     )
-    return render_template("videos.html.jinja2", streamer=streamer, info=info)
+    return dict(streamer=streamer, info=info)
 
 
 @app.route("/videos/<int:id_>/")
+@templated()
 def vod(id_: int):
     info = attempt_extract(f"https://twitch.tv/videos/{id_}/")
-    return render_template(
-        "vod.html.jinja2",
+    return dict(
         info=info,
         poster=info.get("thumbnail"),
         title=info.get("title"),
@@ -111,13 +121,14 @@ def vod(id_: int):
 
 
 @app.route("/<streamer>/clips/")
+@templated()
 def clips(streamer: str):
     qs: bytes = request.query_string
     # Add forms
     info = attempt_extract(
         f"https://twitch.tv/{streamer}/clips?{qs.decode('ascii')}", streamer=streamer
     )
-    return render_template("clips.html.jinja2", streamer=streamer, info=info)
+    return dict(streamer=streamer, info=info)
 
 
 @app.route("/<streamer>/clip/<id_>")
@@ -126,6 +137,7 @@ def streamer_clip(streamer: str, id_: str):
 
 
 @app.route("/clips/<id_>")
+@templated()
 def clip(id_: str):
     info = attempt_extract(f"https://clips.twitch.tv/{id_}")
-    return render_template("clip.html.jinja2", streamer=streamer, info=info)
+    return dict(streamer=streamer, info=info)
