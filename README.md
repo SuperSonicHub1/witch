@@ -26,6 +26,7 @@ This is the full domain of the website you're hosting Witch on, for example: exa
 * ~~Clips~~
 * ~~Nice index~~
 * ~~Embeds~~
+* Add a Makefile
 * Search
 * Make pages more metadata rich
 * Fully migrate to Twitch GQL
