@@ -24,8 +24,8 @@ This is the full domain of the website you're hosting Witch on, for example: exa
 * ~~[Error handling](https://flask.palletsprojects.com/en/1.1.x/patterns/errorpages/)~~
 * ~~VODs~~
 * ~~Clips~~
-* Nice index
-* Embeds
+* ~~Nice index~~
+* ~~Embeds~~
 * Search
 * Make pages more metadata rich
 * Add forms to `clips` and `videos` in order to allow users to filter results.
