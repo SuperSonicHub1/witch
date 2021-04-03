@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "witch"
+version = "0.1.0"
+description = "An alternative front end to Twitch, a livestreaming website."
+authors = ["Kyle Anthony Williams <kyle.anthony.williams2@gmail.com>"]
+license = "Unlicense"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+Flask = "^1.1.2"
+
+[tool.poetry.dev-dependencies]
+black = "^20.8b1"
+mypy = "^0.812"
+python-dotenv = "^0.17.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
