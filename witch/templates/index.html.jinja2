@@ -11,22 +11,25 @@
 <p>Jump around Witch:</p>
 
 <form action="/api/goto/streamer" method="get">
-    <label for="">
+    <label>
         Go to streamer:
-        <input type="text" name="streamer" id="streamer">
+        <input type="text" name="streamer" id="streamer" placeholder="nyanners">
     </label>
+    <button type="submit">Go</button>
 </form>
 
 <form action="/api/goto/url" method="get">
-    <label for="">
+    <label>
         Resolve a Twitch URL:
-        <input type="url" name="url" id="url">
+        <input type="url" name="url" id="url" placeholder="https://twitch.tv/nyanners">
     </label>
+    <button type="submit">Resolve</button>
 </form>
 
 <form action="/search" method="get">
     Search:
-    <input type="search" name="query" id="query">
+    <input type="search" name="query" id="query" placeholder="DOOM Eternal">
+    <button type="submit">Search</button>
 </form>
 
 <h2>About</h2>
