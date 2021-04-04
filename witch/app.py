@@ -7,14 +7,17 @@ from .session import session
 
 app = Flask(__name__)
 
+
 @app.route("/")
 @templated()
 def index():
     return {}
 
+
 ###
 # Section: Streamer
 ###
+
 
 @app.route("/<streamer>/")
 @templated()
@@ -26,9 +29,11 @@ def streamer(streamer: str):
     info, manifest = query.get_live_user(streamer)
     return {"info": info, "manifest": manifest}
 
+
 ###
 # Section: Private API
 ###
+
 
 @app.route("/api/proxy/<path:url>")
 def proxy(url: str):

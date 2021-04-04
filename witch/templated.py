@@ -12,7 +12,7 @@ def templated(template: Optional[str] = None):
     dictionary with the values passed to the template from the view
     function and the template is automatically rendered.
     """
-    
+
     def decorator(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):

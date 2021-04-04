@@ -26,6 +26,7 @@ def create_manifest_url(login: str, access_token: Dict[str, str]) -> str:
 
     return f"https://usher.ttvnw.net/api/channel/hls/{login}.m3u8?{urlencode(query)}"
 
+
 def get_live_user(login: str) -> Tuple[dict, str]:
     dsl_query = DSLQuery(
         ds.Query.user(login=login).select(
@@ -33,7 +34,9 @@ def get_live_user(login: str) -> Tuple[dict, str]:
             ds.User.displayName,
             ds.User.broadcastSettings.select(
                 ds.BroadcastSettings.title,
-                ds.BroadcastSettings.game.select(ds.Game.boxArtURL, ds.Game.name),
+                ds.BroadcastSettings.game.select(
+                    ds.Game.boxArtURL(width=138, height=184), ds.Game.name
+                ),
             ),
             ds.User.stream.select(
                 ds.Stream.previewImageURL(width=1920, height=1080),
@@ -53,7 +56,9 @@ def get_live_user(login: str) -> Tuple[dict, str]:
     query = dsl_gql(dsl_query)
     result = client.execute(query)
     if result["user"] and result["user"]["stream"]:
-        manifest = create_manifest_url(login, result["user"]["stream"]["playbackAccessToken"])
+        manifest = create_manifest_url(
+            login, result["user"]["stream"]["playbackAccessToken"]
+        )
     else:
         manifest = ""
 
