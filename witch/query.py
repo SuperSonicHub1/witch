@@ -29,6 +29,7 @@ def create_manifest_url(login: str, access_token: Dict[str, str]) -> str:
 def get_live_user(login: str) -> Tuple[dict, str]:
     dsl_query = DSLQuery(
         ds.Query.user(login=login).select(
+            ds.User.login,
             ds.User.displayName,
             ds.User.broadcastSettings.select(
                 ds.BroadcastSettings.title,

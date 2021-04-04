@@ -1,12 +1,34 @@
 {% extends "_base.html.jinja2" %}
 
-{% block title %}{{ info.user.displayName }}{% endblock title %}
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/shaka-player@3.0.10/dist/shaka-player.ui.js" integrity="sha256-E/jlam3oFrF3LEA5EBFv6RG51rgyZyjp0Y2bcJTlenw=" crossorigin="anonymous"></script>
+<script src="https://github.com/videojs/mux.js/releases/download/v5.9.1/mux.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shaka-player@3.0.10/dist/controls.css" integrity="sha256-/vbsajwPrOTFdnUt9kRAMs07siOwKWJHinaJyjJ9xUo=" crossorigin="anonymous">
+{% endblock head %}
+
+{% block title %}
+{{ info.user.broadcastSettings.title }} by {{ info.user.displayName }}
+{% endblock title %}
 
 {% block header %}
-<h1>{{ info.user.displayName }}</h1>
+<h1>{{ info.user.broadcastSettings.title }}</h1>
+<p>
+    <a href="/{{info.user.login}}/profile">@{{ info.user.displayName }}</a>
+</p>
 {% endblock header %}
 
 {% block main %}
+
+<div data-shaka-player-container style="max-width: 40em">
+    <video
+        autoplay
+        data-shaka-player
+        id="video"
+        poster="{{ info.user.stream.previewImageURL }}"
+        style="width: 100%; height: 100%">
+            <source src="/api/proxy/{{ manifest | urlencode }}" type="application/vnd.apple.mpegurl"/>
+    </video>
+</div>
 
 {% if config.DEBUG %}
 <details>
