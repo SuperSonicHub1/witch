@@ -1,0 +1,42 @@
+{% extends "_base.html.jinja2" %}
+
+{% block title %}Home{% endblock title %}
+
+{% block header %}
+<h1>Witch: a sane frontend to Twitch</h1>
+{% endblock header %}
+
+{% block main %}
+<h2>Navigation</h2>
+<p>Jump around Witch:</p>
+
+<form action="/api/goto/streamer" method="get">
+    <label for="">
+        Go to streamer:
+        <input type="text" name="streamer" id="streamer">
+    </label>
+</form>
+
+<form action="/api/goto/url" method="get">
+    <label for="">
+        Resolve a Twitch URL:
+        <input type="url" name="url" id="url">
+    </label>
+</form>
+
+<form action="/search" method="get">
+    Search:
+    <input type="search" name="query" id="query">
+</form>
+
+<h2>About</h2>
+
+<p>After getting fed up with Twitch's slow, laggy frontend for the last time along with them slowly but surely killing off embeds, it's about time someone made a frontend that:</p>
+<ul>
+    <li>has a minimal JavaScript footprint compared to Twitch</li>
+    <li>has no ads</li>
+    <li>respects your privacy</li>
+    <li>first-class stream multiplexing</li>
+</ul>
+
+{% endblock main %}
