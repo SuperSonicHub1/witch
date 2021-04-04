@@ -1,8 +1,32 @@
+from random import randint
+from typing import Dict, Union, Tuple
+from urllib.parse import urlencode
 from gql.dsl import dsl_gql, DSLQuery
 from .session import client, ds
 
 
-def get_live_user(login: str):
+def create_manifest_url(login: str, access_token: Dict[str, str]) -> str:
+    base_stream_query: Dict[str, Union[str, int]] = {
+        "allow_source": "true",
+        "allow_audio_only": "true",
+        "allow_spectre": "true",
+        "player": "twitchweb",
+        "playlist_include_framerate": "true",
+        "segment_preference": 4,
+    }
+
+    query = dict(**base_stream_query)
+    query.update(
+        {
+            "p": randint(1000000, 10000000),
+            "sig": access_token["signature"],
+            "token": access_token["value"],
+        }
+    )
+
+    return f"https://usher.ttvnw.net/api/channel/hls/{login}.m3u8?{urlencode(query)}"
+
+def get_live_user(login: str) -> Tuple[dict, str]:
     dsl_query = DSLQuery(
         ds.Query.user(login=login).select(
             ds.User.displayName,
@@ -21,12 +45,15 @@ def get_live_user(login: str):
                 ).select(
                     ds.PlaybackAccessToken.signature, ds.PlaybackAccessToken.value
                 ),
-                ds.Stream.viewersCount
+                ds.Stream.viewersCount,
             ),
         )
     )
     query = dsl_gql(dsl_query)
-    return client.execute(query)
+    result = client.execute(query)
+    if result["user"] and result["user"]["stream"]:
+        manifest = create_manifest_url(login, result["user"]["stream"]["playbackAccessToken"])
+    else:
+        manifest = ""
 
-
-
+    return result, manifest

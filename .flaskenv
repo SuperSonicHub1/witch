@@ -1,1 +1,2 @@
 FLASK_APP=witch:app
+FLASK_DEBUG = 1

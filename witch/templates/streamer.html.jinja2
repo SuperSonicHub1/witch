@@ -1,0 +1,22 @@
+{% extends "_base.html.jinja2" %}
+
+{% block title %}{{ info.user.displayName }}{% endblock title %}
+
+{% block header %}
+<h1>{{ info.user.displayName }}</h1>
+{% endblock header %}
+
+{% block main %}
+
+{% if config.DEBUG %}
+<details>
+    <summary>Template Data</summary>
+    <code>
+    <pre>
+        {{ {"info": info, "manifest": manifest} | pprint }}
+    </pre>
+</code>
+</details>
+{% endif %}
+
+{% endblock main %}
