@@ -32,6 +32,7 @@ def get_live_user(login: str) -> Tuple[dict, str]:
         ds.Query.user(login=login).select(
             ds.User.login,
             ds.User.displayName,
+            ds.User.profileImageURL(width=300),
             ds.User.broadcastSettings.select(
                 ds.BroadcastSettings.title,
                 ds.BroadcastSettings.game.select(

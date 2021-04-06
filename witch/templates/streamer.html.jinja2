@@ -19,18 +19,27 @@
 
 {% block main %}
 
-<div data-shaka-player-container style="max-width: 40em">
-    <video
+<section id="stream" class="container">
+    <section id="player" data-shaka-player-container>
+        <video
         autoplay
         data-shaka-player
         id="video"
         poster="{{ info.user.stream.previewImageURL }}"
-        style="width: 100%; height: 100%">
+        width="100%"
+        height="auto">
             <source src="/api/proxy/{{ manifest | urlencode }}" type="application/vnd.apple.mpegurl"/>
-    </video>
-</div>
+        </video>
+    </section>
+    <section id="chat">
+        <iframe src="https://www.twitch.tv/embed/{{ info.user.login }}/chat?parent={{ request.host.split(':')[0] }}" height="100%" width="auto">
+        </iframe>
+    </section>
+</section>
 
 {% if config.DEBUG %}
+<br>
+
 <details>
     <summary>Template Data</summary>
     <code>
