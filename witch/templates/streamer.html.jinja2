@@ -12,9 +12,6 @@
 
 {% block header %}
 <h1>{{ info.user.broadcastSettings.title }}</h1>
-<p>
-    <a href="/{{info.user.login}}/profile">@{{ info.user.displayName }}</a>
-</p>
 {% endblock header %}
 
 {% block main %}
@@ -28,13 +25,30 @@
         poster="{{ info.user.stream.previewImageURL }}"
         width="100%"
         height="auto">
-            <source src="/api/proxy/{{ manifest | urlencode }}" type="application/vnd.apple.mpegurl"/>
+            {# <source src="/api/proxy/{{ manifest | urlencode }}" type="application/vnd.apple.mpegurl"/> #}
         </video>
     </section>
     <section id="chat">
         <iframe src="https://www.twitch.tv/embed/{{ info.user.login }}/chat?parent={{ request.host.split(':')[0] }}" height="100%" width="auto">
         </iframe>
     </section>
+</section>
+
+<section id="info">
+    <p><b>{{info.user.stream.viewersCount}}</b> viewers</p>
+    <p>Started on <time datetime="{{info.user.stream.createdAt}}">{{created_at}}</time></p>
+    <div>
+        <a href="/{{info.user.login}}/profile">
+            <img class="side-image" src="{{info.user.profileImageURL}}" alt="Profile picture of {{info.user.displayName}}">
+            @{{ info.user.displayName }}
+        </a>
+    </div>
+    <div>
+        <a href="/directory/game/{{info.user.broadcastSettings.game.name}}">
+            <img class="side-image" src="{{info.user.broadcastSettings.game.boxArtURL}}" alt="Box art for {{info.user.broadcastSettings.game.displayName}}">
+            {{ info.user.broadcastSettings.game.displayName }}
+        </a>
+    </div>
 </section>
 
 {% if config.DEBUG %}

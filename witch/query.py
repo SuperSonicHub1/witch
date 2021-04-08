@@ -1,3 +1,4 @@
+from datetime import datetime
 from random import randint
 from typing import Dict, Union, Tuple
 from urllib.parse import urlencode
@@ -27,16 +28,18 @@ def create_manifest_url(login: str, access_token: Dict[str, str]) -> str:
     return f"https://usher.ttvnw.net/api/channel/hls/{login}.m3u8?{urlencode(query)}"
 
 
-def get_live_user(login: str) -> Tuple[dict, str]:
+def get_live_user(login: str) -> Tuple[dict, str, str]:
     dsl_query = DSLQuery(
         ds.Query.user(login=login).select(
             ds.User.login,
             ds.User.displayName,
-            ds.User.profileImageURL(width=300),
+            ds.User.profileImageURL(width=50),
             ds.User.broadcastSettings.select(
                 ds.BroadcastSettings.title,
                 ds.BroadcastSettings.game.select(
-                    ds.Game.boxArtURL(width=138, height=184), ds.Game.name
+                    ds.Game.boxArtURL(width=138 / 2, height=184 / 2),
+                    ds.Game.displayName,
+                    ds.Game.name,
                 ),
             ),
             ds.User.stream.select(
@@ -51,16 +54,22 @@ def get_live_user(login: str) -> Tuple[dict, str]:
                     ds.PlaybackAccessToken.signature, ds.PlaybackAccessToken.value
                 ),
                 ds.Stream.viewersCount,
+                ds.Stream.createdAt,
             ),
         )
     )
     query = dsl_gql(dsl_query)
     result = client.execute(query)
+
+    manifest = ""
+    created_at = ""
+
     if result["user"] and result["user"]["stream"]:
         manifest = create_manifest_url(
             login, result["user"]["stream"]["playbackAccessToken"]
         )
-    else:
-        manifest = ""
+        created_at = datetime.strptime(
+            result["user"]["stream"]["createdAt"], "%Y-%m-%dT%H:%M:%SZ"
+        ).strftime("%c")
 
-    return result, manifest
+    return result, manifest, created_at

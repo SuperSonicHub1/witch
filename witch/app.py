@@ -1,5 +1,5 @@
 from mimetypes import guess_type
-from flask import Flask, make_response
+from flask import Flask, make_response, redirect, url_for, request
 from .templated import templated
 from . import query
 from .session import session
@@ -26,13 +26,18 @@ def streamer(streamer: str):
     (https://m.twitch.tv/xqcow/profile)
     """
 
-    info, manifest = query.get_live_user(streamer)
-    return {"info": info, "manifest": manifest}
+    info, manifest, created_at = query.get_live_user(streamer)
+    return {"info": info, "manifest": manifest, "created_at": created_at}
 
 
 ###
 # Section: Private API
 ###
+
+
+@app.route("/api/goto/streamer")
+def goto_streamer():
+    return redirect(url_for("streamer", streamer=request.args.get("streamer")))
 
 
 @app.route("/api/proxy/<path:url>")
