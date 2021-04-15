@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock title %} | Witch</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='system-font.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    {% block head %}{% endblock head %}
-</head>
-<body>
-    <header>
-        {% block header %}{% endblock header %}
-        <hr>
-    </header>
-    <main>
-        {% block main %}{% endblock main %}
-    </main>
-    <footer>
-        {% block footer %}
-        <hr>
-        <p>Created by Kyle Anthony Williams, released under the Unlicense.</p>
-        {% endblock footer %}
-    </footer>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}{% endblock title %} | Witch</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='system-font.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+        {% block head %}{% endblock head %}
+    </head>
+    <body>
+        <header>
+            {% block header %}{% endblock header %}
+            <hr>
+        </header>
+        <main>
+            {% block main %}{% endblock main %}
+        </main>
+        <footer>
+            {% block footer %}
+            <hr>
+            <p>Created by Kyle Anthony Williams, released under the Unlicense.</p>
+            {% endblock footer %}
+        </footer>
+    </body>
 </html>

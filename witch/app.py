@@ -31,6 +31,20 @@ def streamer(streamer: str):
 
 
 ###
+# Section: Public API
+###
+
+
+@app.route("/api/embed/<streamer>/")
+@templated()
+def embed_streamer(streamer: str):
+    """TODO: if user not live, return 410 (gone)"""
+
+    info, manifest, created_at = query.get_live_user(streamer)
+    return {"info": info, "manifest": manifest, "created_at": created_at}
+
+
+###
 # Section: Private API
 ###
 
