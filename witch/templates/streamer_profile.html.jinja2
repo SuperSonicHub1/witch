@@ -1,0 +1,90 @@
+{% extends "_base.html.jinja2" %}
+
+{% block title %}{{ info.user.displayName }}{% endblock title %}
+
+{% block head %}
+<style>
+    header {
+        background: url({{ info.user.bannerImageURL | tojson }}) center;
+        height: 20%;
+        display: flex;
+        align-items: center;
+    }
+
+    header h1 {
+        color: white;
+    }
+</style>
+{% endblock head %}
+
+{% block header %}
+<h1>{{ info.user.displayName }}</h1>
+{% endblock header %}
+
+{% block main %}
+
+{% if info.user.stream %}
+<br>
+
+<section id="live">
+    <a href="/{{ info.user.login }}">{{ info.user.displayName }}</a> is <b>currently live</b> playing <b>{{ info.user.broadcastSettings.game.name }}</b> with {{ "{:,}".format(info.user.stream.viewersCount) }} viewers!
+</section>
+{% endif %}
+
+<section id="broadcasts">
+    <h2>Recent Broadcasts</h2>
+    
+    {% for edge in info.user.videos.edges %}
+    {% set video = edge.node %}
+
+    <img src="{{ video.previewThumbnailURL }}" alt="Thumbnail for {{ video.title }}">
+    <h3>{{ video.title }}</h3>
+    <p>{{ "{:,}".format(video.viewCount) }} views</p>
+    <p>Published at <time datetime="{{ video.publishedAt }}">{{ video.publishedAt | datestr }}</time></p>
+    <img src="{{ video.game.boxArtURL }}" alt="Box art for {{ video.game.name }}">
+
+    {% endfor %}
+</section>
+
+<section id="clips">
+    <h2>Recent Clips</h2>
+    {% for edge in info.user.clips.edges %}
+    {% set clip = edge.node %}
+
+    <img src="{{ clip.previewThumbnailURL }}" alt="Thumbnail for {{ clip.title }}">
+    <h3>{{ clip.title }}</h3>
+    <p>{{ "{:,}".format(clip.viewCount) }} views</p>
+    <p>Created at <time datetime="{{ clip.createdAt }}">{{ clip.createdAt | datestr }}</time></p>
+    <img src="{{ clip.game.boxArtURL }}" alt="Box art for {{ clip.game.name }}">
+
+    {% endfor %}
+</section>
+
+<section id="highlights">
+    <h2>Recent Highlights</h2>
+    {% for edge in info.user.highlights.edges %}
+    {% set video = edge.node %}
+
+    <img src="{{ video.previewThumbnailURL }}" alt="Thumbnail for {{ video.title }}">
+    <h3>{{ video.title }}</h3>
+    <p>{{ "{:,}".format(video.viewCount) }} views</p>
+    <p>Published on <time datetime="{{ video.publishedAt }}">{{ video.publishedAt | datestr }}</time></p>
+    <img src="{{ video.game.boxArtURL }}" alt="Box art for {{ video.game.name }}">
+
+    {% endfor %}
+</section>
+
+{% if config.DEBUG %}
+<br>
+
+<details>
+    <summary>Template Data</summary>
+    <code>
+    <pre>
+        {{ {"info": info} | pprint }}
+    </pre>
+</code>
+</details>
+{% endif %}
+
+{% endblock main %}

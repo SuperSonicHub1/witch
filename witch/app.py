@@ -1,3 +1,4 @@
+from datetime import datetime
 from mimetypes import guess_type
 from flask import Flask, make_response, redirect, url_for, request
 from .templated import templated
@@ -7,6 +8,9 @@ from .session import session
 
 app = Flask(__name__)
 
+@app.template_filter('datestr')
+def datetime_to_string(s: str):
+    return datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ").strftime("%c")
 
 @app.route("/")
 @templated()
@@ -29,6 +33,12 @@ def streamer(streamer: str):
     info, manifest, created_at = query.get_live_user(streamer)
     return {"info": info, "manifest": manifest, "created_at": created_at}
 
+
+@app.route("/<streamer>/profile/")
+@templated()
+def streamer_profile(streamer: str):
+    info = query.get_user(streamer)
+    return {"info": info}
 
 ###
 # Section: Public API
