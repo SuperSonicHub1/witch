@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.template_filter('datestr')
 def datetime_to_string(s: str):
-    return datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ").strftime("%c")
+    return datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ").strftime("%c UTC")
 
 @app.route("/")
 @templated()

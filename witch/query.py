@@ -117,6 +117,6 @@ def get_live_user(login: str) -> Tuple[dict, str, str]:
         )
         created_at = datetime.strptime(
             result["user"]["stream"]["createdAt"], "%Y-%m-%dT%H:%M:%SZ"
-        ).strftime("%c")
+        ).strftime("%c UTC")
 
     return result, manifest, created_at
