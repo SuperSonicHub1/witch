@@ -3,6 +3,8 @@
 
 This project is powered by youtube-dl and Flask.
 
+***THIS VERSION OF WITCH IS CURRENTLY BEING ABANDONED TO MOVE TO DIRECTLY WORKING WITH THE GRAPHQL API IN EARNEST, SWITCH TO A MORE FREINDLY VIDEO PLAYER, AND PRIORITIZE EASY NAVIGATION TO THE SITE. LOOK TO `new-branch` FOR THIS PROGRESS; IT WILL EVENTUALLY BECOME THE NEW MASTER.***
+
 ## Running
 Clone the repository, `cd` into it, and assuming you have Poetry installed:
 ```shell
