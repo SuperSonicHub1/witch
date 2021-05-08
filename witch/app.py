@@ -1,10 +1,10 @@
 from datetime import datetime
 from mimetypes import guess_type
+from urllib.parse import urlparse
 from flask import Flask, make_response, redirect, url_for, request
-from .templated import templated
 from . import query
 from .session import session
-
+from .templated import templated
 
 app = Flask(__name__)
 
@@ -31,6 +31,10 @@ def streamer(streamer: str):
     """
 
     info, manifest, created_at = query.get_live_user(streamer)
+
+    if not manifest:
+        return redirect(url_for("streamer_profile", streamer=streamer))
+
     return {"info": info, "manifest": manifest, "created_at": created_at}
 
 
@@ -63,6 +67,10 @@ def embed_streamer(streamer: str):
 def goto_streamer():
     return redirect(url_for("streamer", streamer=request.args.get("streamer")))
 
+@app.route("/api/goto/url")
+def goto_url():
+    url = urlparse(request.args.get("url", ""))
+    return redirect(url.path)
 
 @app.route("/api/proxy/<path:url>")
 def proxy(url: str):
