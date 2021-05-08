@@ -26,10 +26,6 @@ def index():
 @app.route("/<streamer>/")
 @templated()
 def streamer(streamer: str):
-    """TODO: if user not live, redirect to profile
-    (https://m.twitch.tv/xqcow/profile)
-    """
-
     info, manifest, created_at = query.get_live_user(streamer)
 
     if not manifest:
