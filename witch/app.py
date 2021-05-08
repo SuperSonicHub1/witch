@@ -8,15 +8,22 @@ from .templated import templated
 
 app = Flask(__name__)
 
-@app.template_filter('datestr')
+
+@app.template_filter("datestr")
 def datetime_to_string(s: str):
     return datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ").strftime("%c UTC")
+
 
 @app.route("/")
 @templated()
 def index():
     return {}
 
+@app.route("/favicon.ico")
+def favicon():
+    return redirect(
+        "https://static.twitchcdn.net/assets/favicon-32-d6025c14e900565d6177.png"
+    )
 
 ###
 # Section: Streamer
@@ -39,6 +46,7 @@ def streamer(streamer: str):
 def streamer_profile(streamer: str):
     info = query.get_user(streamer)
     return {"info": info}
+
 
 ###
 # Section: Public API
@@ -63,10 +71,12 @@ def embed_streamer(streamer: str):
 def goto_streamer():
     return redirect(url_for("streamer", streamer=request.args.get("streamer")))
 
+
 @app.route("/api/goto/url")
 def goto_url():
     url = urlparse(request.args.get("url", ""))
     return redirect(url.path)
+
 
 @app.route("/api/proxy/<path:url>")
 def proxy(url: str):
