@@ -7,39 +7,43 @@
 {% endblock header %}
 
 {% block main %}
-<h2>Navigation</h2>
-<p>Jump around Witch:</p>
+<section id="navigation">
+    <h2>Navigation</h2>
+    <p>Jump around Witch:</p>
 
-<form action="/api/goto/streamer" method="get">
-    <label>
-        Go to streamer:
-        <input type="text" name="streamer" id="streamer" placeholder="nyanners">
-    </label>
-    <button type="submit">Go</button>
-</form>
+    <form action="/api/goto/streamer" method="get">
+        <label>
+            Go to streamer:
+            <input type="text" name="streamer" id="streamer" placeholder="nyanners">
+        </label>
+        <button type="submit">Go</button>
+    </form>
 
-<form action="/api/goto/url" method="get">
-    <label>
-        Resolve a Twitch URL:
-        <input type="url" name="url" id="url" placeholder="https://twitch.tv/nyanners">
-    </label>
-    <button type="submit">Resolve</button>
-</form>
+    <form action="/api/goto/url" method="get">
+        <label>
+            Resolve a Twitch URL:
+            <input type="url" name="url" id="url" placeholder="https://twitch.tv/nyanners">
+        </label>
+        <button type="submit">Resolve</button>
+    </form>
 
-<form action="/search" method="get">
-    Search:
-    <input type="search" name="query" id="query" placeholder="DOOM Eternal">
-    <button type="submit">Search</button>
-</form>
+    <form action="/search" method="get">
+        Search:
+        <input type="search" name="query" id="query" placeholder="DOOM Eternal">
+        <button type="submit">Search</button>
+    </form>
+</section>
 
-<h2>About</h2>
+<section id="about">
+    <h2>About</h2>
 
-<p>After getting fed up with Twitch's slow, laggy frontend for the last time along with them slowly but surely killing off embeds, it's about time someone made a frontend that:</p>
-<ul>
-    <li>has a minimal JavaScript footprint compared to Twitch</li>
-    <li>has no ads</li>
-    <li>respects your privacy</li>
-    <li>first-class stream multiplexing</li>
-</ul>
+    <p>After getting fed up with Twitch's slow, laggy frontend for the last time along with them slowly but surely killing off embeds, it's about time someone made a frontend that:</p>
+    <ul>
+        <li>has a minimal JavaScript footprint compared to Twitch</li>
+        <li>has no ads</li>
+        <li>respects your privacy</li>
+        <li>first-class stream multiplexing</li>
+    </ul>
+</section>
 
 {% endblock main %}
