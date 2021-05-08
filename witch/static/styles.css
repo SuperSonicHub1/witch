@@ -7,6 +7,19 @@ body {
     display: flex;
 }
 
+.container-horizontal {
+    flex-direction: row;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
 .side-image {
     vertical-align: middle;
+}
+
+#live {
+    background: hsl(0, 69%, 73%);
 }

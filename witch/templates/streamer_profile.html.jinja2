@@ -33,45 +33,62 @@
 
 <section id="broadcasts">
     <h2>Recent Broadcasts</h2>
-    
-    {% for edge in info.user.videos.edges %}
-    {% set video = edge.node %}
-
-    <img src="{{ video.previewThumbnailURL }}" alt="Thumbnail for {{ video.title }}">
-    <h3>{{ video.title }}</h3>
-    <p>{{ "{:,}".format(video.viewCount) }} views</p>
-    <p>Published at <time datetime="{{ video.publishedAt }}">{{ video.publishedAt | datestr }}</time></p>
-    <img src="{{ video.game.boxArtURL }}" alt="Box art for {{ video.game.name }}">
-
-    {% endfor %}
+    <div class="grid">
+        {% for edge in info.user.videos.edges %}
+        {% set video = edge.node %}
+        <article class="card">
+            <img src="{{ video.previewThumbnailURL }}" alt="Thumbnail for {{ video.title }}">
+            <div class="container container-horizontal">
+                <img src="{{ video.game.boxArtURL }}" alt="Box art for {{ video.game.name }}">
+                <div>
+                    <h3>{{ video.title }}</h3>
+                    <p>{{ "{:,}".format(video.viewCount) }} views</p>
+                    <p>Published at <time datetime="{{ video.publishedAt }}">{{ video.publishedAt | datestr }}</time></p>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
 </section>
 
 <section id="clips">
     <h2>Recent Clips</h2>
-    {% for edge in info.user.clips.edges %}
-    {% set clip = edge.node %}
-
-    <img src="{{ clip.previewThumbnailURL }}" alt="Thumbnail for {{ clip.title }}">
-    <h3>{{ clip.title }}</h3>
-    <p>{{ "{:,}".format(clip.viewCount) }} views</p>
-    <p>Created at <time datetime="{{ clip.createdAt }}">{{ clip.createdAt | datestr }}</time></p>
-    <img src="{{ clip.game.boxArtURL }}" alt="Box art for {{ clip.game.name }}">
-
-    {% endfor %}
+    <div class="grid">
+        {% for edge in info.user.clips.edges %}
+        {% set clip = edge.node %}
+        <article class="card">
+            <img src="{{ clip.previewThumbnailURL }}" alt="Thumbnail for {{ clip.title }}">
+            <div class="container container-horizontal">
+                <img src="{{ clip.game.boxArtURL }}" alt="Box art for {{ clip.game.name }}">
+                <div>
+                    <h3>{{ clip.title }}</h3>
+                    <p>{{ "{:,}".format(clip.viewCount) }} views</p>
+                    <p>Created at <time datetime="{{ clip.createdAt }}">{{ clip.createdAt | datestr }}</time></p>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
 </section>
 
 <section id="highlights">
     <h2>Recent Highlights</h2>
-    {% for edge in info.user.highlights.edges %}
-    {% set video = edge.node %}
-
-    <img src="{{ video.previewThumbnailURL }}" alt="Thumbnail for {{ video.title }}">
-    <h3>{{ video.title }}</h3>
-    <p>{{ "{:,}".format(video.viewCount) }} views</p>
-    <p>Published on <time datetime="{{ video.publishedAt }}">{{ video.publishedAt | datestr }}</time></p>
-    <img src="{{ video.game.boxArtURL }}" alt="Box art for {{ video.game.name }}">
-
-    {% endfor %}
+    <div class="grid">
+        {% for edge in info.user.highlights.edges %}
+        {% set video = edge.node %}
+        <article class="card">
+            <img src="{{ video.previewThumbnailURL }}" alt="Thumbnail for {{ video.title }}">
+            <div class="container container-horizontal">
+                <img src="{{ video.game.boxArtURL }}" alt="Box art for {{ video.game.name }}">
+                <div>
+                    <h3>{{ video.title }}</h3>
+                    <p>{{ "{:,}".format(video.viewCount) }} views</p>
+                    <p>Published on <time datetime="{{ video.publishedAt }}">{{ video.publishedAt | datestr }}</time></p>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
 </section>
 
 {% if config.DEBUG %}
