@@ -1,7 +1,7 @@
 from datetime import datetime
 from mimetypes import guess_type
 from urllib.parse import urlparse
-from flask import Flask, make_response, redirect, url_for, request
+from flask import Flask, make_response, redirect, url_for, request, abort
 from . import query
 from .session import session
 from .templated import templated
@@ -56,9 +56,11 @@ def streamer_profile(streamer: str):
 @app.route("/api/embed/<streamer>/")
 @templated()
 def embed_streamer(streamer: str):
-    """TODO: if user not live, return 410 (gone)"""
-
     info, manifest, created_at = query.get_live_user(streamer)
+
+    if not manifest:
+        abort(410)
+
     return {"info": info, "manifest": manifest, "created_at": created_at}
 
 
