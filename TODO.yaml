@@ -1,0 +1,30 @@
+search:
+  - construct GQL request:
+    - get search suggestions with Query.searchSuggestions (https://supersonichub1.github.io/twitch-graphql-api/searchsuggestionconnection.doc.html)
+    - get search results with Query.searchFor (https://supersonichub1.github.io/twitch-graphql-api/searchfor.doc.html)
+  - create HTML page:
+    - allow user to filter (?type):
+      - top
+      - channels
+      - categories
+      - videos
+    - have 'view all' buttons for each category of item
+    - make sure to cache searches (?term)
+    - have autocomplete via <datalist> abuse
+embeds:
+  - optimize stream query with Query.streamPlaybackAccessToken (https://supersonichub1.github.io/twitch-graphql-api/playbackaccesstoken.doc.html)
+streamer_profile:
+  - sub-routes:
+    - about
+    - schedule(?)
+    - videos
+    - chat redirect
+  - add links to content
+directory:
+  - construct GQL request:
+    - get a single directory with Query.directory (https://supersonichub1.github.io/twitch-graphql-api/directory.doc.html)
+deployment:
+  - add Procfile:
+    - generate requirements.txt
+  - add .replit
+  - add Dockerfile
