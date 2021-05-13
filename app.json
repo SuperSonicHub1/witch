@@ -1,0 +1,6 @@
+{
+    "name": "Witch",
+    "description": "An in-progress alternative front-end to Twitch powered by its GraphQL API and Flask.",
+    "repository": "https://github.com/supersonicspy1/witch",
+    "keywords": ["twitch", "privacy", "python"]
+}
