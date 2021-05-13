@@ -9,6 +9,7 @@ license = "Unlicense"
 python = "^3.7"
 Flask = "^1.1.2"
 gql = {version = "^2.0.0", extras = ["requests"]}
+gunicorn = "^20.1.0"
 
 [tool.poetry.dev-dependencies]
 black = "^20.8b1"
