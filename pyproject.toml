@@ -8,7 +8,7 @@ license = "Unlicense"
 [tool.poetry.dependencies]
 python = "^3.7"
 Flask = "^1.1.2"
-gql = {version = "^2.0.0", extras = ["requests"]}
+gql = {version = "3.0.0a5", extras = ["requests"]}
 gunicorn = "^20.1.0"
 
 [tool.poetry.dev-dependencies]
